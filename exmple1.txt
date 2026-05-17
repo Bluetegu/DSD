@@ -1,0 +1,8 @@
+Activation date	Expiry date	Quantity	Product	Years	Currency	Price excl. VAT	Price incl. VAT	Client name	Client email	Client phone
+10-04-2025 14:31	10-04-2026 00:00	1	Kaspersky Plus 1-Device 1 jaar (CBA)	1	€	0	0	Brilleman	a.j.brilleman@casema.nl	0302204396
+11-04-2025 14:43	11-04-2026 00:00	1	F-Secure Internet Security 3-PC 1 year	1	€	0	0	van Duuren	jmj.vanduuren@gmail.com	0652344906
+14-04-2025 15:43	14-04-2026 00:00	1	Kaspersky Plus 1-Device 1 jaar (CBA)	1	€	0	0	van der Sluijs	tonneke.freek@ziggo.nl	0302290171
+15-04-2025 16:34	15-04-2026 00:00	1	Microsoft 365 Personal 1-PC/MAC 1 jaar	1	€	81.82	99	JG Project	INFO@JGPROJECT.NL	0653288080
+17-04-2025 12:40	17-04-2026 00:00	1	Kaspersky Plus 1-Device 1 jaar (CBA)	1	€	0	0	Scholte	hanschol@hotmail.com	0646711287
+17-04-2025 13:36	17-04-2026 00:00	1	Kaspersky Plus 1-Device 1 jaar (CBA)	1	€	0	0	van Hattem	Liteke.terhaar@planet.nl	0651561933
+24-04-2025 15:53	24-04-2026 00:00	1	Kaspersky Plus 1-Device 1 jaar (CBA)	1	€	0	0	Blaak	wilmablaak@live.nl	0619533472

@@ -1,0 +1,11 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
+
+# Built app — regenerate with: bash build_app.sh
+RenewalToContacts.app/
