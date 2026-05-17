@@ -16,6 +16,9 @@ osacompile -o "$APP" "$DIR/AdminToContacts.applescript"
 # Bundle the Python script inside the app's Resources folder
 cp "$DIR/admin_to_contacts.py" "$APP/Contents/Resources/"
 
+# Strip macOS quarantine so the app isn't flagged as 'damaged' on other Macs
+xattr -cr "$APP"
+
 echo ""
 echo "Done.  $APP is ready."
 echo ""

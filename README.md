@@ -131,8 +131,17 @@ bash build_app.sh          # rebuilds RenewalToContacts.app
 bash build_admin_app.sh    # rebuilds AdminToContacts.app
 ```
 
-> **First launch only:** macOS may show an "unidentified developer" warning.  
-> Right-click the app → **Open** → **Open**. After that, double-click works normally.
+> **Sharing the app with others**  
+> Before sending the app (zip, AirDrop, etc.), run this once in Terminal to prevent a "damaged file" error on the recipient's Mac:
+> ```bash
+> xattr -cr AdminToContacts.app
+> xattr -cr RenewalToContacts.app
+> ```
+> If the recipient already has the app and sees the error, they can run:
+> ```bash
+> xattr -cr ~/Downloads/AdminToContacts.app
+> ```
+> After that, double-click works normally. The build scripts (`build_admin_app.sh`, `build_app.sh`) already run this automatically.
 
 ---
 
