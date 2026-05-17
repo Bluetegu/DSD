@@ -1,18 +1,18 @@
--- RenewalToContacts.applescript
+-- AdminToContacts.applescript
 --
--- Double-click this app after copying the renewal table in Apple Mail (Cmd+C).
--- It will show a preview dialog and import the clients into Apple Contacts.
+-- Double-click this app after copying the admin table (Cmd+C).
+-- It will show a preview dialog and import the contacts into Apple Contacts.
 
 on run
     -- ── Locate the Python script bundled inside this .app ─────────────────
     set appPosixPath to POSIX path of (path to me)
-    set scriptPath to appPosixPath & "Contents/Resources/renewal_to_contacts.py"
+    set scriptPath to appPosixPath & "Contents/Resources/admin_to_contacts.py"
 
     -- ── Verify the script exists ──────────────────────────────────────────
     try
         do shell script "test -f " & quoted form of scriptPath
     on error
-        display dialog "renewal_to_contacts.py was not found inside the app bundle." & return & return & scriptPath buttons {"OK"} default button "OK" with title "Renewal Import" with icon stop
+        display dialog "admin_to_contacts.py was not found inside the app bundle." & return & return & scriptPath buttons {"OK"} default button "OK" with title "Admin Import" with icon stop
         return
     end try
 
@@ -23,12 +23,12 @@ on run
     try
         set previewText to do shell script py & " " & quoted form of scriptPath & " --list"
     on error errMsg
-        display dialog errMsg buttons {"OK"} default button "OK" with title "Renewal Import" with icon stop
+        display dialog errMsg buttons {"OK"} default button "OK" with title "Admin Import" with icon stop
         return
     end try
 
     -- ── Confirmation dialog ───────────────────────────────────────────────
-    set dlg to display dialog previewText & return & return & "Import into Apple Contacts?" buttons {"Cancel", "Import"} default button "Import" with title "Renewal Import"
+    set dlg to display dialog previewText & return & return & "Import into Apple Contacts?" buttons {"Cancel", "Import"} default button "Import" with title "Admin Import"
 
     if button returned of dlg is "Import" then
         -- ── Run import ────────────────────────────────────────────────────

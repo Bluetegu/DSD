@@ -1,12 +1,21 @@
-# RenewalToContacts
+# DSD Contacts Import Tools
 
-Imports software renewal clients from Apple Mail into Apple Contacts.
-
-When a renewal email arrives, it contains a table listing clients whose licences are expiring. This tool reads that table and creates or updates each client as a contact in Apple Contacts, storing the renewal details (activation date, expiry date, quantity and product) in the contact's Note field.
+Two macOS apps that import client tables copied from Apple Mail or a browser into Apple Contacts. No technical knowledge required — just copy, double-click, and confirm.
 
 ---
 
-## How it works
+## Apps
+
+| App                       | Source               | What it imports                                                             |
+| ------------------------- | -------------------- | --------------------------------------------------------------------------- |
+| **RenewalToContacts.app** | Renewal email table  | Client name, email, phone; renewal details in Note                          |
+| **AdminToContacts.app**   | Administration table | Company, contact name (split), address (home), email; admin details in Note |
+
+---
+
+## RenewalToContacts
+
+### How it works
 
 | Contact field | Source column                                   |
 | ------------- | ----------------------------------------------- |
@@ -16,12 +25,10 @@ When a renewal email arrives, it contains a table listing clients whose licences
 | Note          | Activation date, Expiry date, Quantity, Product |
 
 **Matching logic**
-- If a contact with the same email already exists → the Note is updated and a phone number is added if none is present.
-- If no match is found → a new contact is created.
+- Existing contact (matched by email) → Note is updated; phone is added if none is present.
+- No match → new contact is created.
 
----
-
-## Usage (App — no technical knowledge required)
+### Usage (App)
 
 1. Open the renewal email in **Apple Mail**.
 2. Select the entire table and copy it — **Cmd+C**.
@@ -30,12 +37,7 @@ When a renewal email arrives, it contains a table listing clients whose licences
 5. Click **Import** to write them to Apple Contacts.
 6. A confirmation dialog reports how many were created and updated.
 
-> **First launch only:** macOS may show an "unidentified developer" warning.  
-> Right-click the app → **Open** → **Open**. After that, double-click works normally.
-
----
-
-## Usage (Terminal — advanced)
+### Usage (Terminal — advanced)
 
 ```bash
 # 1. Copy the table in Apple Mail (Cmd+C)
@@ -43,15 +45,9 @@ When a renewal email arrives, it contains a table listing clients whose licences
 python3 renewal_to_contacts.py
 ```
 
-The script prints a preview table and asks for confirmation before making any changes.
+### Expected table format
 
----
-
-## Expected table format
-
-The copied table must include a header row. Column names can be in English or Dutch. The minimum required columns are **Client name**, **Client email**, and **Client phone**. Extra columns (Years, Currency, Price) are ignored.
-
-Example (tab-separated, as copied from Apple Mail):
+Column names can be in English or Dutch. Minimum required columns: **Client name**, **Client email**, **Client phone**. Extra columns are ignored.
 
 ```
 Activation date    Expiry date        Quantity  Product                                 Client name    Client email                 Client phone
@@ -61,27 +57,82 @@ Activation date    Expiry date        Quantity  Product                         
 
 ---
 
-## Project files
+## AdminToContacts
+
+### How it works
+
+| Contact field | Source column                            |
+| ------------- | ---------------------------------------- |
+| First Name    | First word of Contact person             |
+| Last Name     | Remainder of Contact person              |
+| Company       | Company name                             |
+| Email         | Email (label: work)                      |
+| Address       | Address + Postal code/City (label: home) |
+| Note          | Company, address, and postal/city        |
+
+**Matching logic**
+- Existing contact (matched by email) → company, note, and address fields are **updated**. If an address already exists, its street/zip/city are updated in place; if not, a new home address is added.
+- No match → new contact is created with all available fields.
+- Cells containing `n/a`, `n.a.`, `-`, `nvt`, or `n.v.t.` are treated as empty.
+
+### Usage (App)
+
+1. Open the administration table in **Apple Mail** or your browser.
+2. Select the entire table and copy it — **Cmd+C**.
+3. Double-click **`AdminToContacts.app`**.
+4. A dialog shows the list of contacts found. Review it.
+5. Click **Import** to write them to Apple Contacts.
+6. A confirmation dialog reports how many were created and updated.
+
+### Usage (Terminal — advanced)
+
+```bash
+# 1. Copy the table (Cmd+C)
+# 2. Run:
+python3 admin_to_contacts.py
+```
+
+### Expected table format
+
+Column names can be in English or Dutch. Required columns: **Company name**, **Contact person**, **Email**. Address columns (**Address**, **Postal code/City**) are optional.
 
 ```
-RenewalToContacts.app        Double-click app for end users (self-contained)
-renewal_to_contacts.py       Python source — all logic lives here
-RenewalToContacts.applescript  AppleScript source for the app UI
-build_app.sh                 Rebuilds RenewalToContacts.app from source
-requirements.txt             No packages required (Python 3 + osascript, both built into macOS)
+Company name                    Contact person     Address                Postal code/City    Email
+Legato-automatisering (own use) Elon Cosla         W. Barentszstraat 78   3572PN / Utrecht    info@legato-automatisering.nl
+Bloemen                         Lisa Bloemen       -                      -                   lisabloemenlb@outlook.com
 ```
 
 ---
 
-## Rebuilding the app
+## Project files
 
-After any change to `renewal_to_contacts.py`:
-
-```bash
-bash build_app.sh
+```
+RenewalToContacts.app          Double-click app — renewal imports
+AdminToContacts.app            Double-click app — admin imports
+renewal_to_contacts.py         Python source for renewal import
+admin_to_contacts.py           Python source for admin import
+RenewalToContacts.applescript  AppleScript UI for renewal app
+AdminToContacts.applescript    AppleScript UI for admin app
+build_app.sh                   Rebuilds RenewalToContacts.app
+build_admin_app.sh             Rebuilds AdminToContacts.app
+renewal-example.txt            Example renewal table (tab-separated)
+admin-example.txt              Example admin table (tab-separated)
+requirements.txt               No packages required
 ```
 
-This recompiles the AppleScript and copies the updated Python script into the app bundle.
+---
+
+## Rebuilding the apps
+
+After any change to the Python source:
+
+```bash
+bash build_app.sh          # rebuilds RenewalToContacts.app
+bash build_admin_app.sh    # rebuilds AdminToContacts.app
+```
+
+> **First launch only:** macOS may show an "unidentified developer" warning.  
+> Right-click the app → **Open** → **Open**. After that, double-click works normally.
 
 ---
 

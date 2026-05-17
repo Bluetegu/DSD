@@ -9,3 +9,4 @@ __pycache__/
 
 # Built app — regenerate with: bash build_app.sh
 RenewalToContacts.app/
+AdminToContacts.app/
