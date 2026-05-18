@@ -22,6 +22,7 @@ Match logic:
 
 Requirements: Python 3 and osascript — both built into macOS. No packages needed.
 """
+from __future__ import annotations
 
 import csv
 import io
@@ -209,6 +210,7 @@ def _build_batch_script(records: list[dict]) -> str:
     """
     parts: list[str] = [
         'tell application "Contacts"',
+        '    with timeout of 300 seconds',
         '    set output to ""',
         '',
     ]
@@ -287,6 +289,7 @@ def _build_batch_script(records: list[dict]) -> str:
     parts += [
         '    save',
         '    return output',
+        '    end timeout',
         'end tell',
     ]
 

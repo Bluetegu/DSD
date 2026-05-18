@@ -21,6 +21,7 @@ Match logic:
 
 Requirements: Python 3 and osascript — both built into macOS. No packages needed.
 """
+from __future__ import annotations
 
 import csv
 import io
@@ -182,6 +183,7 @@ def upsert_contact(r: dict) -> str:
 
     script = f"""\
 tell application "Contacts"
+    with timeout of 60 seconds
     set noteText to {note_expr}
     set matched to (every person whose value of emails contains {email_as})
 
@@ -211,6 +213,7 @@ tell application "Contacts"
         save
         return "created"
     end if
+    end timeout
 end tell
 """
     return _run_applescript(script)

@@ -33,7 +33,9 @@ on run
     if button returned of dlg is "Import" then
         -- ── Run import ────────────────────────────────────────────────────
         try
-            set importResult to do shell script py & " " & quoted form of scriptPath & " --import"
+            with timeout of 300 seconds
+                set importResult to do shell script py & " " & quoted form of scriptPath & " --import"
+            end timeout
             display dialog importResult buttons {"Done"} default button "Done" with title "Import Complete"
         on error errMsg
             display dialog errMsg buttons {"OK"} default button "OK" with title "Import Error" with icon stop
