@@ -4,6 +4,21 @@ Two macOS apps that import client tables copied from Apple Mail or a browser int
 
 ---
 
+## Download
+
+1. Go to the [**Releases**](https://github.com/Bluetegu/DSD/releases) page
+2. Under the latest release, download **AdminToContacts.zip** and/or **RenewalToContacts.zip**
+3. Unzip and move the app to wherever you like (e.g. your Desktop or Applications folder)
+
+**First launch — "damaged file" warning:**  
+macOS may block apps downloaded from the internet. If you see a "damaged" error, open Terminal and run:
+```bash
+xattr -cr ~/Downloads/AdminToContacts.app
+```
+Replace `~/Downloads/` with wherever you saved the app. After that, double-click works normally.
+
+---
+
 ## Apps
 
 | App                       | Source               | What it imports                                                             |
