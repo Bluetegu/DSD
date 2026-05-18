@@ -25,7 +25,7 @@ Two macOS apps that import client tables copied from Apple Mail or a browser int
 | Note          | Activation date, Expiry date, Quantity, Product |
 
 **Matching logic**
-- Existing contact (matched by email) → Note is updated; phone is added if none is present.
+- Existing contact (matched by email) → Note is **prepended** to any existing note (history preserved); phone is added if none is present.
 - No match → new contact is created.
 
 ### Usage (App)
@@ -71,7 +71,8 @@ Activation date    Expiry date        Quantity  Product                         
 | Note          | Company, address, and postal/city        |
 
 **Matching logic**
-- Existing contact (matched by email) → company, note, and address fields are **updated**. If an address already exists, its street/zip/city are updated in place; if not, a new home address is added.
+- Existing contact (matched by email) → company, note, and address fields are **updated**. If an address already exists, its street/zip/city are updated in place; if not, a new home address is added. If the contact has no first name (e.g. created by RenewalToContacts), first and last name are filled in.
+- Note is **prepended** to any existing note, so previous import history is preserved.
 - No match → new contact is created with all available fields.
 - Cells containing `n/a`, `n.a.`, `-`, `nvt`, or `n.v.t.` are treated as empty.
 

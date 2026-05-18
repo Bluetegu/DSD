@@ -234,7 +234,16 @@ def _build_batch_script(records: list[dict]) -> str:
             f'        if (count of matched) > 0 then',
             f'            -- UPDATE existing contact',
             f'            set thePerson to item 1 of matched',
-            f'            set note of thePerson to noteText',
+            f'            set existingNote to note of thePerson',
+            f'            if existingNote is not missing value and existingNote is not "" then',
+            f'                set note of thePerson to noteText & linefeed & linefeed & existingNote',
+            f'            else',
+            f'                set note of thePerson to noteText',
+            f'            end if',
+            f'            if first name of thePerson is missing value or first name of thePerson is "" then',
+            f'                set first name of thePerson to {first_as}',
+            f'                set last name of thePerson to {last_as}',
+            f'            end if',
         ]
 
         if r["company"]:

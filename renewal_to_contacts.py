@@ -190,7 +190,12 @@ tell application "Contacts"
     if (count of matched) > 0 then
         -- ── UPDATE existing contact ─────────────────────────────────────────
         set thePerson to item 1 of matched
-        set note of thePerson to noteText
+        set existingNote to note of thePerson
+        if existingNote is not missing value and existingNote is not "" then
+            set note of thePerson to noteText & linefeed & linefeed & existingNote
+        else
+            set note of thePerson to noteText
+        end if
         if (count of phones of thePerson) = 0 and {phone_as} is not "" then
             make new phone at end of phones of thePerson ¬
                 with properties {{label:"work", value:{phone_as}}}
